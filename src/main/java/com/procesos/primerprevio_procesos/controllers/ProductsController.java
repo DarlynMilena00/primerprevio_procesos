@@ -22,13 +22,13 @@ public class ProductsController {
     }
 
     @Autowired
-    private ProductsServiceImp productServiceImp;
+    private ProductsServiceImp productsServiceImp;
 
     @GetMapping(value ="/product/{id}")
     public ResponseEntity findProductById(@PathVariable Long id){
         Map response = new HashMap();
         try{
-            return new ResponseEntity(productServiceImp.getProducts(id), HttpStatus.OK);
+            return new ResponseEntity(productsServiceImp.getProducts(id), HttpStatus.OK);
         }catch(Exception e){
             response.put("status", "404");
             response.put("message","No se encontró el producto.");
@@ -43,7 +43,7 @@ public class ProductsController {
         ProductsApi productsApi = restTemplate.getForObject(url, ProductsApi.class);
         for (Products products : productsApi.getProducts()) {
 
-            Boolean res = productServiceImp.saveProducts(products);
+            Boolean res = productsServiceImp.saveProducts(products);
             Map response = new HashMap();
             if(res==true){
                 System.out.println("Registrado");;
@@ -59,11 +59,16 @@ public class ProductsController {
     public ResponseEntity findAll() {
         Map response = new HashMap();
         try {
-            return new ResponseEntity(productServiceImp.allProducts(), HttpStatus.OK);
+            return new ResponseEntity(productsServiceImp.allProducts(), HttpStatus.OK);
         } catch (Exception e) {
             response.put("status", "404");
             response.put("message", "No se encontró el producto");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping
+    public void updateProducts(@RequestBody Products products){
+        productsServiceImp.updateProducts(products.getId(), products);
     }
 }

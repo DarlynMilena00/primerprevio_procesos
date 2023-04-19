@@ -8,6 +8,6 @@ public interface ProductsService {
     Products getProducts(Long id);
     Boolean saveProducts(Products products);
     List<Products> allProducts();
-    Boolean updateProduct(Long id, Products products);
+    Boolean updateProducts(Long id, Products products);
 
 }

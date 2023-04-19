@@ -29,5 +29,15 @@ public class ProductsServiceImp implements ProductsService {
     public List<Products> allProducts() {
         return productsRepository.findAll();
     }
+
+    @Override
+    public Boolean updateProducts(Long id, Products products) {
+        try{
+            productsRepository.save(products);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
 }
 
